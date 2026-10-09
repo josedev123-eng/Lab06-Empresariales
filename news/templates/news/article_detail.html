@@ -1,0 +1,33 @@
+{% extends 'news/base.html' %}
+
+{% block title %}{{ article.title }} · Portal{% endblock %}
+
+{% block content %}
+<article class="detail">
+  <div class="detail-cats">
+    {% for cat in article.categories.all %}
+      <a href="{% url 'news:category_list' cat.slug %}">{{ cat.name }}</a>
+    {% empty %}
+      <span>Sin categoría</span>
+    {% endfor %}
+  </div>
+  <h1>{{ article.title }}</h1>
+  <p class="detail-meta">
+    {% if article.author.avatar %}<img class="avatar" src="{{ article.author.avatar.url }}" alt="{{ article.author.name }}">{% endif %}
+    ✍️ {{ article.author|default:"Redacción" }} · 📅 {{ article.published_at|date:"l, d/m/Y H:i" }}
+  </p>
+  {% if article.featured_image %}
+    <img class="hero" src="{{ article.featured_image.url }}" alt="Imagen destacada de {{ article.title }}">
+  {% endif %}
+  <div class="body">{{ article.body|linebreaks }}</div>
+</article>
+
+<h2>Relacionadas</h2>
+<div class="grid">
+  {% for rel in related %}
+    {% include 'news/_article_card.html' with article=rel %}
+  {% empty %}
+    <p class="empty">Sin noticias relacionadas.</p>
+  {% endfor %}
+</div>
+{% endblock %}

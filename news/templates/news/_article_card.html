@@ -1,0 +1,18 @@
+{# Fragmento reutilizable: tarjeta de noticia (paso 5). #}
+<article class="card">
+  {% if article.featured_image %}
+    <a href="{% url 'news:article_detail' article.slug %}">
+      <img src="{{ article.featured_image.url }}" alt="Imagen de {{ article.title }}" loading="lazy">
+    </a>
+  {% endif %}
+  <div class="card-body">
+    <div class="card-cats">
+      {% for cat in article.categories.all %}
+        <a href="{% url 'news:category_list' cat.slug %}">{{ cat.name }}</a>
+      {% endfor %}
+    </div>
+    <h3><a href="{% url 'news:article_detail' article.slug %}">{{ article.title }}</a></h3>
+    <p class="card-meta">✍️ {{ article.author|default:"Redacción" }} · 📅 {{ article.published_at|date:"d/m/Y H:i" }}</p>
+    <p>{{ article.excerpt|default:article.body|truncatewords:25 }}</p>
+  </div>
+</article>

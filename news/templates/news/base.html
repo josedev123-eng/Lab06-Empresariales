@@ -1,0 +1,40 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Portal de noticias{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'news/styles.css' %}">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{% url 'news:home' %}">📰 Mi Portal</a>
+  <nav>
+    <a href="{% url 'news:home' %}">Portada</a>
+    {% for cat in categories %}
+      <a href="{% url 'news:category_list' cat.slug %}">{{ cat.name }}</a>
+    {% empty %}
+    {% endfor %}
+    <a href="/admin/news/article/">⚙️ Admin</a>
+  </nav>
+</header>
+<div class="layout">
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <aside>
+    {% block sidebar %}
+      <h3>Secciones</h3>
+      <ul>
+        {% for cat in categories %}
+          <li><a href="{% url 'news:category_list' cat.slug %}">{{ cat.name }}</a></li>
+        {% empty %}
+          <li>Sin secciones todavía.</li>
+        {% endfor %}
+      </ul>
+    {% endblock %}
+  </aside>
+</div>
+<footer class="site-footer">Portal de noticias · DAE · <a href="/admin/">admin</a></footer>
+</body>
+</html>

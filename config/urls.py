@@ -25,4 +25,5 @@ urlpatterns = [
     path('quiz/', include('quiz.urls')),
     path('books/<int:pk>/', book_detail, name='book_detail'),
     path('movies/', include('movies.urls')),
+    path('news/', include('news.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

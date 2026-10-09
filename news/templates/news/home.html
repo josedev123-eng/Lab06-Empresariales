@@ -1,0 +1,14 @@
+{% extends 'news/base.html' %}
+
+{% block title %}Portada · {{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>Últimas noticias</h1>
+<div class="grid">
+  {% for article in articles %}
+    {% include 'news/_article_card.html' with article=article %}
+  {% empty %}
+    <p class="empty">Todavía no hay noticias publicadas. Date de alta en el <a href="/admin/news/article/add/">admin</a>.</p>
+  {% endfor %}
+</div>
+{% endblock %}
